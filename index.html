@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nishtha ❤️ Your Valentine</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Roboto',sans-serif;
+  overflow:hidden;
+  background: linear-gradient(135deg,#ffb6c1,#87cefa);
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  text-align:center;
+}
+h1{font-family:'Pacifico',cursive;font-size:3em;margin-bottom:0.2em;opacity:0;animation:fadeIn 2s forwards;}
+#intro{font-size:1.2em;opacity:0;animation:fadeIn 4s forwards;margin-bottom:20px;}
+button{
+  padding:12px 25px;font-size:1em;border:none;border-radius:30px;cursor:pointer;
+  background:#ff69b4;color:#fff;margin:10px;transition:0.2s;box-shadow:0 0 10px #fff;
+}
+button:hover{transform:scale(1.1);box-shadow:0 0 20px #fff;}
+#proposal{display:none;font-size:1.1em;margin-top:20px;min-height:120px;line-height:1.4em;border-right:2px solid white;white-space:nowrap;overflow:hidden;}
+.heart{position:absolute;width:15px;height:15px;background:red;transform:rotate(-45deg);animation:float 6s linear infinite;}
+.heart::before,.heart::after{content:"";position:absolute;width:15px;height:15px;background:red;border-radius:50%;}
+.heart::before{top:-7px;left:0;} .heart::after{top:0;left:7px;}
+@keyframes float{0%{transform:translateY(100vh) rotate(0deg);opacity:1;}100%{transform:translateY(-100px) rotate(360deg);opacity:0;}}
+@keyframes fadeIn{to{opacity:1;}}
+#confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;}
+.confetti-piece{position:absolute;width:8px;height:8px;border-radius:50%;opacity:0.8;}
+canvas#fireworks{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;}
+#nameHearts{position:absolute;top:25%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+.name-heart{position:absolute;width:12px;height:12px;background:pink;transform:rotate(-45deg);}
+.name-heart::before,.name-heart::after{content:"";position:absolute;width:12px;height:12px;background:pink;border-radius:50%;}
+#sparkle{position:absolute;width:100%;height:100%;top:0;left:0;pointer-events:none;}
+.sparkle{position:absolute;width:4px;height:4px;background:white;border-radius:50%;opacity:0.8;}
+</style>
+</head>
+<body>
+
+<h1>Hey Nishtha ❤️</h1>
+<div id="intro">I have something to tell you…</div>
+<button id="revealBtn">Click me 💖</button>
+<div id="proposal"></div>
+<div id="actionBtns" style="display:none;">
+  <button id="yesBtn">Yes 💖</button>
+  <button id="maybeBtn">Maybe Later 🌸</button>
+</div>
+
+<div id="confetti"></div>
+<canvas id="fireworks"></canvas>
+<div id="nameHearts"></div>
+<div id="sparkle"></div>
+
+<!-- Songs -->
+<audio id="songYes" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3"></audio> <!-- Romantic -->
+<audio id="songMaybe" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"></audio> <!-- Sad -->
+
+<script>
+const revealBtn=document.getElementById('revealBtn');
+const proposalDiv=document.getElementById('proposal');
+const actionBtns=document.getElementById('actionBtns');
+const yesBtn=document.getElementById('yesBtn');
+const maybeBtn=document.getElementById('maybeBtn');
+const confettiContainer=document.getElementById('confetti');
+const nameHeartsContainer=document.getElementById('nameHearts');
+const sparkleContainer=document.getElementById('sparkle');
+const songYes=document.getElementById('songYes');
+const songMaybe=document.getElementById('songMaybe');
+
+const message=`Oye bauni sun...yrr me terse Boht pyar krta hu...terko to pta hi h...me pgla ho jaunga tere bina...yrrr please haan krde...pilijj...
+Btw Happy Valentine's Day 💌`;
+
+// Reveal proposal
+revealBtn.addEventListener('click',()=>{
+  revealBtn.style.display='none';
+  proposalDiv.style.display='block';
+  typeText(proposalDiv,message,0,()=>{
+    actionBtns.style.display='block';
+    createNameHearts();
+  });
+});
+
+// Typing effect
+function typeText(el,text,i,cb){
+  if(i<text.length){el.innerHTML+=text.charAt(i);setTimeout(()=>typeText(el,text,i+1,cb),50);}
+  else{cb();}
+}
+
+// Floating hearts
+setInterval(()=>{
+  let h=document.createElement('div');
+  h.className='heart';
+  h.style.left=Math.random()*window.innerWidth+'px';
+  h.style.backgroundColor=Math.random()>0.5?'pink':'lightblue';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},250);
+
+// Hearts forming "Nishtha"
+function createNameHearts(){
+  const name="Nishtha";
+  let x=-70;
+  for(let i=0;i<name.length;i++){
+    let h=document.createElement('div');
+    h.className='name-heart';
+    h.style.left=x+i*25+'px';
+    h.style.top='0px';
+    nameHeartsContainer.appendChild(h);
+  }
+}
+
+// Confetti
+function createConfetti(){
+  for(let i=0;i<120;i++){
+    let c=document.createElement('div');
+    c.classList.add('confetti-piece');
+    c.style.backgroundColor=Math.random()>0.5?'pink':'lightblue';
+    c.style.left=Math.random()*window.innerWidth+'px';
+    c.style.top=Math.random()*window.innerHeight+'px';
+    c.style.width=(Math.random()*8+4)+'px';
+    c.style.height=c.style.width;
+    confettiContainer.appendChild(c);
+    fallConfetti(c);
+  }
+}
+function fallConfetti(c){
+  let top=parseFloat(c.style.top);
+  let speed=Math.random()*3+2;
+  function anim(){top+=speed;c.style.top=top+'px';if(top<window.innerHeight)requestAnimationFrame(anim);else c.remove();}
+  anim();
+}
+
+// Fireworks
+const canvas=document.getElementById('fireworks');
+const ctx=canvas.getContext('2d');
+canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+function launchFireworks(){
+  for(let i=0;i<30;i++){createFirework(Math.random()*canvas.width,Math.random()*canvas.height/2);}
+}
+function createFirework(x,y){
+  let particles=[];
+  for(let i=0;i<25;i++){
+    particles.push({x:x,y:y,dx:(Math.random()-0.5)*5,dy:(Math.random()-0.5)*5,color:Math.random()>0.5?'pink':'lightblue',alpha:1});
+  }
+  let interval=setInterval(()=>{
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p=>{
+      p.x+=p.dx;p.y+=p.dy;p.alpha-=0.03;if(p.alpha<=0)p.alpha=0;
+      ctx.fillStyle=p.color; ctx.globalAlpha=p.alpha;
+      ctx.beginPath();ctx.arc(p.x,p.y,2,0,Math.PI*2);ctx.fill();
+    });
+    if(particles.every(p=>p.alpha<=0)) clearInterval(interval);
+    ctx.globalAlpha=1;
+  },30);
+}
+
+// Sparkles
+function createSparkles(){
+  for(let i=0;i<100;i++){
+    let s=document.createElement('div');
+    s.className='sparkle';
+    s.style.left=Math.random()*window.innerWidth+'px';
+    s.style.top=Math.random()*window.innerHeight+'px';
+    sparkleContainer.appendChild(s);
+    setTimeout(()=>s.remove(),2000);
+  }
+}
+
+// YES button
+yesBtn.addEventListener('click',()=>{
+  // Notify user
+  alert("🎉 She clicked YES! You got it! 💖");
+  createConfetti();
+  launchFireworks();
+  createSparkles();
+  songYes.play();
+  // Funny easter egg
+  setTimeout(()=>alert("She said YES! Now time to dance 💃🕺"),1500);
+});
+
+// MAYBE button
+maybeBtn.addEventListener('click',()=>{
+  songMaybe.play();
+  alert("She said maybe… let's wait patiently 😢");
+  // Funny easter egg
+  setTimeout(()=>alert("Don't worry, you'll get her soon! 😉"),1500);
+});
+</script>
+
+</body>
+</html>
